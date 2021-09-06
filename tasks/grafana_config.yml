@@ -1,7 +1,7 @@
 ---
 - block: # Drop configuration templates
   - name: Drop grafana server configuration
-    template:
+    ansible.builtin.template:
       src: grafana-server.j2
       dest: "{{ grafana_environment_filepath }}"
       owner: "{{ grafana_user }}"
@@ -11,7 +11,7 @@
       - Restart grafana server
 
   - name: Ensure directory exist
-    file:
+    ansible.builtin.file:
       path: "{{ item }}"
       state: directory
       owner: "{{ grafana_user }}"
@@ -22,7 +22,7 @@
       - "{{ grafana_dir_log }}"
 
   - name: Drop grafana ini configuration
-    template:
+    ansible.builtin.template:
       src: grafana.ini.j2
       dest: "{{ grafana_config_filepath }}"
       owner: "{{ grafana_user }}"
@@ -32,7 +32,7 @@
       - Restart grafana server
 
   - name: Drop LDAP grafana server configuation
-    template:
+    ansible.builtin.template:
       src: ldap.toml.j2
       dest: "{{ grafana_ldap_config_filepath }}"
       owner: "{{ grafana_user }}"
@@ -43,7 +43,7 @@
       - Restart grafana server
 
   - name: Copy grafana plugins from local
-    copy:
+    ansible.builtin.copy:
       src: "{{ grafana_plugin_path }}"
       dest: "{{ grafana_dir_plugins }}"
     when: 

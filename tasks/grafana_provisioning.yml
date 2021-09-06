@@ -1,6 +1,6 @@
 ---
 - name: Drop datasources provisioning file
-  template:
+  ansible.builtin.template:
     src: datasources-ansible.yml.j2
     dest: "{{ grafana_dir_home }}/{{ grafana_config.paths.provisioning }}/datasources/ansible.yml"
     owner: "{{ grafana_user }}"
@@ -14,7 +14,7 @@
 
 - block: # Drop dashboard files
   - name: Drop dashboards json files
-    copy:
+    ansible.builtin.copy:
       src: "{{ grafana_dashboard_json_path }}/"
       dest: "{{ grafana_dir_data }}/dashboards"
       owner: "{{ grafana_user }}"
@@ -27,7 +27,7 @@
       - grafana_dashboard_check.stat.isdir
 
   - name: Drop dashboards provisioning files
-    template:
+    ansible.builtin.template:
       src: dashboards-ansible.yml.j2
       dest: "{{ grafana_dir_home }}/{{ grafana_config.paths.provisioning }}/dashboards/ansible.yml"
       owner: "{{ grafana_user }}"
