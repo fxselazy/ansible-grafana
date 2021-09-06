@@ -1,12 +1,12 @@
 ---
 - block:
   - name: Set list of path to look for local Grafana configuration directory
-    set_fact:
+    ansible.builtin.set_fact:
       grafana_search_config_paths: "{{ grafana_search_config_paths }} + [ '{{ grafana_search_config_path }}' ]"
     with_items: "{{ group_names }}"
 
   - name: Check if Grafana configuration directory exists
-    stat:
+    ansible.builtin.stat:
       path: "{{ item }}"
     register: grafana_config_check
     become: false
@@ -16,7 +16,7 @@
         skip: true
 
   - name: Set Grafana configuration directory
-    set_fact:
+    ansible.builtin.set_fact:
       grafana_host_config_path: "{{ grafana_config_check.results[0].stat.path }}"
     when:
       - grafana_config_check.results[0] is defined
@@ -25,7 +25,7 @@
       - grafana_config_check.results[0].stat.isdir
 
   - name: Check if Grafana dashboard json files exists
-    stat:
+    ansible.builtin.stat:
       path: "{{ grafana_dashboard_json_path }}"
     become: false
     delegate_to: 127.0.0.1
@@ -34,7 +34,7 @@
     - grafana-dashboard
 
 - name: Check if Grafana plugins files exists
-  stat:
+  ansible.builtin.stat:
     path: "{{ grafana_plugin_path }}"
   become: false
   delegate_to: 127.0.0.1
