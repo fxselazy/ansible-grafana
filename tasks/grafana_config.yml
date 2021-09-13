@@ -52,7 +52,7 @@
     - Restart grafana server
 
   - name: Install grafana plugins
-    grafana_plugin:
+    community.grafana.grafana_plugin:
       name: "{{ item }}"
       version: latest
       state: present

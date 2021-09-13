@@ -1,6 +1,6 @@
 ---
 - name: Create database
-  mysql_db:
+  community.mysql.mysql_db:
     login_user: "{{ item.value.priv_user }}"
     login_password: "{{ item.value.priv_password }}"
     login_host: "{{ item.value.host.split(':')[0] }}"
@@ -12,7 +12,7 @@
     {{ grafana_database_config | combine(grafana_privileges_credential|default({}), recursive=True) }}
 
 - name: Grant access to the DB
-  mysql_user:
+  community.mysql.mysql_user:
     login_user: "{{ item.0.priv_user }}"
     login_password: "{{ item.0.priv_password }}"
     login_host: "{{ item.0.host.split(':')[0] }}"

@@ -7,7 +7,7 @@ lint: |
   set -e
   ansible-lint ../../etc
 platforms:
-  - name: ubuntu2004
+  - name: ubuntu2004-grafana
     image: quay.io/ansible/ubuntu2004-test-container
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
